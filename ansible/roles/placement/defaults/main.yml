@@ -1,0 +1,5 @@
+---
+# defaults file for roles/memcached
+PLACEMENT_PASS: PLACEMENT_PASS
+controller_ip: 127.0.0.1
+PLACEMENT_DBPASS: PLACEMENT_DBPASS

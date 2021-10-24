@@ -1,0 +1,14 @@
+---
+# tasks file for roles/mariadb
+- name: Install mariadb-server
+  apt:
+    name:
+      - mariadb-server
+      - python3-pymysql
+- name: Config mariadb-server
+  template:
+    src: 50-server.cnf.j2
+    dest: /etc/mysql/mariadb.conf.d/50-server.cnf
+    mode: 0644
+- name: Restart server mariadb
+  shell: systemctl restart mysql

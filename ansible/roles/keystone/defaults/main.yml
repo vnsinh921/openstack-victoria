@@ -1,0 +1,4 @@
+---
+# defaults file for roles/keystone
+controller_ip: 127.0.0.1
+ADMIN_PASS: ADMIN_PASS

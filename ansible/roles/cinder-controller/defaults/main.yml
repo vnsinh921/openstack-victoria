@@ -1,0 +1,7 @@
+---
+# defaults file for roles/cinder-controller
+controller_ip: 127.0.0.1
+eth0_ip: 10.0.0.52
+RABBIT_PASS: RABBIT_PASS
+CINDER_PASS: CINDER_PASS
+CINDER_DBPASS: CINDER_DBPASS

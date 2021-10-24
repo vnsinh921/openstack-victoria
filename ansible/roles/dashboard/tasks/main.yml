@@ -1,0 +1,14 @@
+---
+# tasks file for roles/dashboard
+- name: Install openstack-dashboard
+  apt:
+    name: openstack-dashboard
+- name: Config openstack-dashboard
+  template:
+    src: local_settings.py.j2
+    dest: /etc/openstack-dashboard/local_settings.py
+    mode: 0644
+    owner: horizon
+    group: horizon
+- name: Restart service apache
+  shell: systemctl reload apache2.service && systemctl restart memcached

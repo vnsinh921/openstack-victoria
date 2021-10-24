@@ -1,0 +1,66 @@
+---
+# tasks file for roles/neutron-controller
+- name: Install neutron
+  apt:
+    name: 
+      - neutron-server
+      - neutron-plugin-ml2
+      - neutron-linuxbridge-agent
+      - neutron-l3-agent
+      - neutron-dhcp-agent
+      - openvswitch-switch
+      - neutron-metadata-agent
+- name: Config neutron
+  template:
+    src: neutron.conf.j2
+    dest: /etc/neutron/neutron.conf
+    mode: 0644
+    owner: neutron
+    group: neutron
+
+- name: Config metadata agent
+  template:
+    src: metadata_agent.ini.j2
+    dest: /etc/neutron/metadata_agent.ini
+    mode: 0644
+    owner: neutron
+    group: neutron
+
+- name: Config (ML2) plug-in
+  template:
+    src: ml2_conf.ini.j2
+    dest: /etc/neutron/plugins/ml2/ml2_conf.ini
+    mode: 0644
+    owner: neutron
+    group: neutron
+- name: Config Linux bridge agent
+  template:
+    src: linuxbridge_agent.ini.j2
+    dest: /etc/neutron/plugins/ml2/linuxbridge_agent.ini
+    mode: 0644
+    owner: neutron
+    group: neutron
+- name: Config layer-3 agent
+  template:
+    src: l3_agent.ini.j2
+    dest: /etc/neutron/l3_agent.ini
+    mode: 0644
+    owner: neutron
+    group: neutron
+- name: Config DHCP agent
+  template:
+    src: dhcp_agent.ini.j2
+    dest: /etc/neutron/dhcp_agent.ini
+    mode: 0644
+    owner: neutron
+    group: neutron
+- name: Config short link driver plugin
+  shell : sudo ln -s /etc/neutron/plugins/ml2/linuxbridge_agent.ini /etc/neutron/fwaas_driver.ini
+  ignore_errors: yes
+
+- name: Populate the database
+  shell: su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf  --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
+- name: Restart service neutron
+  shell: service nova-api restart && service neutron-server restart && service neutron-linuxbridge-agent restart && service neutron-dhcp-agent restart && service neutron-metadata-agent restart && service neutron-l3-agent restart
+
+  

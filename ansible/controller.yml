@@ -1,0 +1,18 @@
+
+- hosts: controller-1
+  become: yes
+  roles:
+    - {role: environment, tags: environment}
+    - {role: mariadb, tags: mariadb}
+  #  - {role: rabbitmq-server, tags: rabbitmq-server}
+    - {role: memcached, tags: memcachedcl}
+    - {role: etcd, tags: etcd}
+    - {role: create-databases, tags: create-databases} # Chi chay 1 lan
+    - {role: keystone, tags: keystone}
+    - {role: create-endpoint, tags: create-endpoint} # Chi chay 1 lan
+    - {role: glance, tags: glance}
+    - {role: placement, tags: placement}
+    - {role: nova-controller, tags: nova-controller}
+    - {role: neutron-controller, tags: neutron-controller}
+    - {role: cinder-controller, tags: cinder-controller}
+    - {role: dashboard, tags: dashboard}

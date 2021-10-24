@@ -1,0 +1,5 @@
+---
+# defaults file for roles/memcached
+GLANCE_DBPASS: GLANCE_DBPASS
+controller_ip: 127.0.0.1
+GLANCE_PASS: GLANCE_PASS

@@ -1,0 +1,19 @@
+---
+# tasks file for roles/memcached
+
+
+- name: Install placement
+  apt:
+    name: placement-api
+- name: Config placement-api
+  template:
+    src: placement.conf.j2
+    dest: /etc/placement/placement.conf
+    mode: 0644
+    owner: placement
+    group: placement
+- name: Populate the Image service database
+  shell: su -s /bin/sh -c "placement-manage db sync" placement
+- name: Restart service apache2
+  shell: systemctl restart apache2 
+  

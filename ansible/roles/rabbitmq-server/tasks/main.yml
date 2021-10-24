@@ -1,0 +1,11 @@
+---
+# tasks file for roles/rabbitmq-server
+- name: Install rabbitmq-server
+  apt:
+    name: rabbitmq-server
+- name: Restart rabbitmq-server
+  shell: systemctl restart rabbitmq-server
+- name: Add the openstack user
+  shell: rabbitmqctl add_user openstack {{ RABBIT_PASS }}
+- name: Permit configuration, write, and read access for the openstack use
+  shell: rabbitmqctl set_permissions openstack ".*" ".*" ".*"

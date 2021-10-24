@@ -1,0 +1,11 @@
+---
+# tasks file for roles/memcached
+- name: Install Memcached 
+  apt:
+    name:
+      - memcached
+      - python3-memcache
+- name: Config Memcached 
+  shell: sed -i 's/-l 127.0.0.1/-l 0.0.0.0/g' /etc/memcached.conf
+- name: Restart service memcache
+  shell: systemctl restart memcached

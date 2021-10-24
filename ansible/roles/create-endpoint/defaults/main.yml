@@ -1,0 +1,9 @@
+---
+# defaults file for roles/create-endpoint
+GLANCE_PASS: GLANCE_PASS
+PLACEMENT_PASS: PLACEMENT_PASS
+NOVA_PASS: NOVA_PASS
+NEUTRON_PASS: NEUTRON_PASS
+CINDER_PASS: CINDER_PASS
+version-nova: v2.1
+controller_ip: 127.0.0.1

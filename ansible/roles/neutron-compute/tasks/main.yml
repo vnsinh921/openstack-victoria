@@ -1,0 +1,16 @@
+---
+# tasks file for roles/neutron-compute
+- name: Install neutron-linuxbridge-agent
+  apt:
+    name: neutron-linuxbridge-agent
+
+- name: Config Linux bridge agent
+  template:
+    src: linuxbridge_agent.ini.j2
+    dest: /etc/neutron/plugins/ml2/linuxbridge_agent.ini
+    mode: 0644
+    owner: neutron
+    group: neutron
+
+- name: Restart service nova
+  shell: service nova-compute restart && service neutron-linuxbridge-agent restart

@@ -1,0 +1,3 @@
+---
+# defaults file for roles/nova-compute
+eth0_ip: 10.0.0.31

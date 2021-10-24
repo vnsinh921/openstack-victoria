@@ -1,0 +1,19 @@
+---
+# tasks file for roles/cinder-node
+- name: Install cinder-volume
+  apt:
+    name: cinder-volume
+
+- name: Config cinder-volume
+  template:
+    src: cinder.conf.j2
+    dest: /etc/cinder/cinder.conf
+    mode: 0644
+    owner: cinder
+    group: cinder
+- name: Create LVM physical volume /dev/sdb
+  shell: pvcreate /dev/{{ sdb }}
+- name: Create the LVM volume group cinder-volumes
+  shell: vgcreate cinder-volumes /dev/{{ sdb }}
+- name: Restart service cinder-volume
+  shell: service tgt restart && service cinder-volume restart

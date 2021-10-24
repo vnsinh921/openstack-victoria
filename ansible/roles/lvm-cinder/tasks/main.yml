@@ -1,0 +1,12 @@
+---
+# tasks file for roles/lvm-cinder
+- name: Install nova compute
+  apt:
+    name: 
+      - lvm2
+      - thin-provisioning-tools
+- name: Config lvm
+  template:
+    src: lvm.conf.j2
+    dest: /etc/lvm/lvm.conf
+    mode: 0644

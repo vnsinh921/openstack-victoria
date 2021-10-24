@@ -1,0 +1,3 @@
+---
+# defaults file for roles/rabbitmq-server
+RABBIT_PASS: RABBIT_PASS

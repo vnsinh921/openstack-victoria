@@ -1,0 +1,23 @@
+---
+# tasks file for roles/nova-compute
+- name: Install nova compute
+  apt:
+    name: nova-compute
+
+- name: Config nova 
+  template:
+    src: nova.conf.j2
+    dest: /etc/nova/nova.conf
+    mode: 0644
+    owner: nova
+    group: nova
+
+- name: Config nova-compute
+  template:
+    src: nova-compute.conf.j2
+    dest: /etc/nova/nova-compute.conf
+    mode: 0644
+    owner: nova
+    group: nova
+- name: Restart service nova
+  shell: service nova-compute restart

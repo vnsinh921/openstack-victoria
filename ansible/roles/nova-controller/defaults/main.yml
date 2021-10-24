@@ -1,0 +1,8 @@
+---
+# defaults file for roles/memcached
+controller_ip: 127.0.0.1
+manager_ip: 10.0.0.11
+NOVA_DBPASS: NOVA_DBPASS
+NOVA_PASS: NOVA_PASS
+NEUTRON_PASS: NEUTRON_PASS
+PLACEMENT_PASS: PLACEMENT_PASS

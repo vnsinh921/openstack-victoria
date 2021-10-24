@@ -1,0 +1,18 @@
+---
+# tasks file for roles/memcached
+
+- name: Install glance
+  apt:
+    name: glance
+- name: Config glance-api
+  template:
+    src: glance-api.conf.j2
+    dest: /etc/glance/glance-api.conf
+    mode: 0644
+    owner: glance
+    group: glance
+- name: Populate the Image service database
+  shell: su -s /bin/sh -c "glance-manage db_sync" glance
+- name: Restart service glance-api
+  shell: systemctl restart glance-api
+

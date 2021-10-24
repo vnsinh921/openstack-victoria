@@ -1,0 +1,6 @@
+---
+# handlers file for roles/memcached
+- name: restart glance-api
+  service:
+    name: glance-api
+    state: restarted

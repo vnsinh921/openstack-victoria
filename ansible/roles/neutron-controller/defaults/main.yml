@@ -1,0 +1,8 @@
+---
+# defaults file for roles/neutron-controller
+controller_ip: 127.0.0.1
+RABBIT_PASS: RABBIT_PASS
+NEUTRON_PASS: NEUTRON_PASS
+NOVA_PASS: NOVA_PASS
+eth1_ip: 10.0.10.52
+NEUTRON_DBPASS: NEUTRON_DBPASS

@@ -1,0 +1,30 @@
+---
+# tasks file for roles/keystone
+- name: Install keystone
+  apt:
+    name: keystone
+- name: Config keystone
+  template:
+    src: keystone.conf.j2
+    dest: /etc/keystone/keystone.conf
+    mode: 0644
+    owner: keystone
+    group: keystone
+
+- name: Populate the Identity service database
+  shell: su -s /bin/sh -c "keystone-manage db_sync" keystone
+- name: Initialize Fernet key
+  shell: keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone && keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
+- name: Bootstrap the Identity service
+  shell: keystone-manage bootstrap --bootstrap-password {{ ADMIN_PASS }}  --bootstrap-admin-url http://{{ controller_ip }}:5000/v3/   --bootstrap-internal-url http://{{ controller_ip }}:5000/v3/   --bootstrap-public-url http://{{ controller_ip }}:5000/v3/   --bootstrap-region-id RegionOne
+- name: Config apache2 service
+  template:
+    src: apache2.conf.j2
+    dest: /etc/apache2/apache2.conf
+    mode: 0644
+- name: Restart server apache2
+  shell : systemctl restart apache2
+
+
+- name: Configure the administrative account by setting the proper environmental variables
+  shell: echo "export OS_USERNAME=admin" >> /root/.bashrc &&  echo "export OS_PASSWORD={{ ADMIN_PASS }}" >> /root/.bashrc && echo "export OS_PROJECT_NAME=admin" >> /root/.bashrc && echo "export OS_USER_DOMAIN_NAME=Default" >> /root/.bashrc && echo "export OS_PROJECT_DOMAIN_NAME=Default" >> /root/.bashrc && echo "export OS_AUTH_URL=http://{{ controller_ip }}:5000/v3" >> /root/.bashrc && echo "export OS_IDENTITY_API_VERSION=3" >> /root/.bashrc
